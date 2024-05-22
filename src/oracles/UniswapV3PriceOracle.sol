@@ -2,10 +2,10 @@
 pragma solidity ^0.8.24;
 
 import {IERC20} from "lib/forge-std/src/interfaces/IERC20.sol";
-import {IUniswapV3Pool} from "lib/uniswap-v3-core/contracts/interfaces/IUniswapV3Pool.sol";
 import {Math} from "lib/openzeppelin/contracts/utils/math/Math.sol";
 
 import {IPriceOracle} from "../interfaces/IPriceOracle.sol";
+import {IUniswapV3Pool} from "../interfaces/IUniswapV3Pool.sol";
 
 /**
  * @title CoW AMM UniswapV3 Price Oracle
