@@ -7,6 +7,3 @@
 [submodule "lib/openzeppelin"]
 	path = lib/openzeppelin
 	url = https://github.com/OpenZeppelin/openzeppelin-contracts
-[submodule "lib/pyth-sdk-solidity"]
-	path = lib/pyth-sdk-solidity
-	url = https://github.com/pyth-network/pyth-sdk-solidity

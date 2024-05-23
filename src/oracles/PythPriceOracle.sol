@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.24;
 
-import {IPyth, PythStructs} from "lib/pyth-sdk-solidity/IPyth.sol";
 import {Math} from "lib/openzeppelin/contracts/utils/math/Math.sol";
 import {stdMath} from "lib/openzeppelin/lib/forge-std/src/StdMath.sol";
 import {IPriceOracle} from "../interfaces/IPriceOracle.sol";
 import {IConditionalOrder} from "lib/composable-cow/src/interfaces/IConditionalOrder.sol";
 import {IWatchtowerCustomErrors} from "../interfaces/IWatchtowerCustomErrors.sol";
+import {IPyth, PythStructs} from "../interfaces/IPyth.sol";
 
 /**
  * @title Chainlink Price Oracle
