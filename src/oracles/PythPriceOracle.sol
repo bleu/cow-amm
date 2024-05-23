@@ -3,6 +3,7 @@ pragma solidity ^0.8.24;
 
 import {IPyth, PythStructs} from "lib/pyth-sdk-solidity/IPyth.sol";
 import {Math} from "lib/openzeppelin/contracts/utils/math/Math.sol";
+import {stdMath} from "lib/openzeppelin/lib/forge-std/src/StdMath.sol";
 import {IPriceOracle} from "../interfaces/IPriceOracle.sol";
 import {IConditionalOrder} from "lib/composable-cow/src/interfaces/IConditionalOrder.sol";
 import {IWatchtowerCustomErrors} from "../interfaces/IWatchtowerCustomErrors.sol";
@@ -65,8 +66,8 @@ contract PythPriceOracle is IPriceOracle, IWatchtowerCustomErrors {
             revert PollTryAtEpoch(block.timestamp + oracleData.backoff, "stale oracle");
         }
 
-        uint256 price0Uint256 = uint256(_absolute(price0.price));
-        uint256 price1Uint256 = uint256(_absolute(price1.price));
+        uint256 price0Uint256 = stdMath.abs(int256(price0.price));
+        uint256 price1Uint256 = stdMath.abs(int256(price1.price));
 
         uint256 price0PrecisionBps = Math.mulDiv(price0Uint256 - uint256(price0.conf), _MAX_BPS, price0Uint256);
         uint256 price1PrecisionBps = Math.mulDiv(price1Uint256 - uint256(price1.conf), _MAX_BPS, price1Uint256);
@@ -78,16 +79,8 @@ contract PythPriceOracle is IPriceOracle, IWatchtowerCustomErrors {
             priceNumerator = price1Uint256;
             priceDenominator = price0Uint256;
         } else {
-            priceNumerator = price1Uint256 * (10 ** (18 - _absolute(int64(price1.expo))));
-            priceDenominator = price0Uint256 * (10 ** (18 - _absolute(int64(price0.expo))));
-        }
-    }
-
-    function _absolute(int64 value) internal pure returns (uint64) {
-        if (value < 0) {
-            return uint64(-value);
-        } else {
-            return uint64(value);
+            priceNumerator = price1Uint256 * (10 ** (18 - stdMath.abs(int256(price1.expo))));
+            priceDenominator = price0Uint256 * (10 ** (18 - stdMath.abs(int256(price0.expo))));
         }
     }
 }
