@@ -19,7 +19,7 @@ contract PythPriceOracle is IPriceOracle, IWatchtowerCustomErrors {
     /**
      * @notice The Pyth entrypoint on the network
      */
-    IPyth public immutable pythAggregator;
+    IPyth public pythAggregator;
     uint256 private constant _MAX_BPS = 10000;
 
     /**
@@ -35,6 +35,13 @@ contract PythPriceOracle is IPriceOracle, IWatchtowerCustomErrors {
         uint256 minPrecisionBps;
         uint256 timeThreshold;
         uint256 backoff;
+    }
+
+    /**
+     * @param _pythAggregator The address of the Pyth aggregator in the current chain.
+     */
+    constructor(IPyth _pythAggregator) {
+        pythAggregator = _pythAggregator;
     }
 
     /**

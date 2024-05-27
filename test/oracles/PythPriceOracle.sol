@@ -19,7 +19,7 @@ contract PythPriceOracleTest is Test {
     uint256 currentTimestamp = 10000;
 
     function setUp() public {
-        oracle = new PythPriceOracle();
+        oracle = new PythPriceOracle(oracleAggregator);
         vm.warp(currentTimestamp);
 
         vm.mockCall(
