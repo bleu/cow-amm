@@ -121,7 +121,7 @@ contract PythPriceOracleTest is Test {
         oracle.getPrice(unusedToken, unusedToken, abi.encode(getDefaultOracleData()));
     }
 
-    function testRevertsIfOracleIsInprecise() public {
+    function testRevertsIfOracleIsImprecise() public {
         vm.mockCall(
             address(oracleAggregator),
             abi.encodeCall(IPyth.getPriceUnsafe, (USDCOracle)),
@@ -129,7 +129,7 @@ contract PythPriceOracleTest is Test {
         );
         vm.expectRevert(
             abi.encodeWithSelector(
-                IWatchtowerCustomErrors.PollTryAtEpoch.selector, block.timestamp + defaultBackoff, "inprecise oracle"
+                IWatchtowerCustomErrors.PollTryAtEpoch.selector, block.timestamp + defaultBackoff, "imprecise oracle"
             )
         );
         oracle.getPrice(unusedToken, unusedToken, abi.encode(getDefaultOracleData()));

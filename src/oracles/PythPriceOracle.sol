@@ -9,7 +9,7 @@ import {IWatchtowerCustomErrors} from "../interfaces/IWatchtowerCustomErrors.sol
 import {IPyth, PythStructs} from "../interfaces/IPyth.sol";
 
 /**
- * @title Chainlink Price Oracle
+ * @title Pyth Price Oracle
  * @author yvesfracari
  * @dev This contract creates an oracle that is compatible with the IPriceOracle
  * interface and can be used by a CoW AMM to determine the current price of the
@@ -23,7 +23,7 @@ contract PythPriceOracle is IPriceOracle, IWatchtowerCustomErrors {
     uint256 private constant _MAX_BPS = 10000;
 
     /**
-     * @param token1Feed Id of token0 price feed
+     * @param token0Feed Id of token0 price feed
      * @param token1Feed Id of token1 price feed
      * @param minPrecisionBps Minimum precision considering (price-error)/price in bases points
      * @param timeThreshold Amount of seconds before the oracle is considered stale
@@ -72,7 +72,7 @@ contract PythPriceOracle is IPriceOracle, IWatchtowerCustomErrors {
         uint256 price0PrecisionBps = Math.mulDiv(price0Uint256 - uint256(price0.conf), _MAX_BPS, price0Uint256);
         uint256 price1PrecisionBps = Math.mulDiv(price1Uint256 - uint256(price1.conf), _MAX_BPS, price1Uint256);
         if (price0PrecisionBps < oracleData.minPrecisionBps || price1PrecisionBps < oracleData.minPrecisionBps) {
-            revert PollTryAtEpoch(block.timestamp + oracleData.backoff, "inprecise oracle");
+            revert PollTryAtEpoch(block.timestamp + oracleData.backoff, "imprecise oracle");
         }
 
         if (price0.expo == price1.expo) {
